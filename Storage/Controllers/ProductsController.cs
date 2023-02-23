@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Storage.Data;
 using Storage.Models;
 using System.Text.Json;
 
@@ -6,40 +8,71 @@ namespace Storage.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase {
-        private static List<ProductModel> products = new List<ProductModel>();
 
         // GET: api/<ProductsController>
         [HttpGet]
         public IEnumerable<ProductModel> Get() {
+            List<ProductModel> products;
+
+            using (var db = new ApiDbContext()) {
+                products = db.Products.Where(p => p.Active == true).ToList();
+            }
+
             return products;
         }
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
         public ProductModel Get(int id) {
-            return products[id];
+            ProductModel model;
+
+            using (var db = new ApiDbContext()) {
+                model = db.Products.Find(id);
+            }
+
+            return model;
         }
 
         // POST api/<ProductsController>
         [HttpPost]
         public void Post([FromBody] ProductModel product) {
-            if(product != null)
-                products.Add(product);
+            if (product != null) {
+                using (var db = new ApiDbContext()) {
+                    db.Products.Add(product);
+                    db.SaveChanges();
+                }
+            }
         }
 
         // PUT api/<ProductsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] ProductModel product) {
-            if (product != null && id > 0 && id <= products.Count) 
-                products.Insert(id, product);
-            
+        public void Put(int id, [FromBody] ProductModel newProduct) {
+            using (var db = new ApiDbContext()) {
+                if (newProduct != null && id > 0) {
+                    var product = db.Products.Find(id);
+
+                    if (product != null) {
+
+                        product.Name = newProduct.Name;
+                        product.Price = newProduct.Price;
+                        product.Description = newProduct.Description;   
+                        
+                        db.SaveChanges();
+                    }
+                }
+            }
         }
 
         // DELETE api/<ProductsController>/5
         [HttpDelete("{id}")]
         public void Delete(int id) {
-            if(id > 0 && id < products.Count) 
-                products.RemoveAt(id);
+            using (var db = new ApiDbContext()) {
+                var product = db.Products.Find(id);
+                if (product != null) {
+                    db.Products.Remove(product);
+                    db.SaveChanges();
+                }
+            }
         }
     }
 }
