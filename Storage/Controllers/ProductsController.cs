@@ -23,14 +23,14 @@ namespace Storage.Controllers {
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
-        public ProductModel Get(int id) {
-            ProductModel model;
+        public ProductModel? Get(int id) {
+            ProductModel? product;
 
             using (var db = new ApiDbContext()) {
-                model = db.Products.Find(id);
+                product = db.Products.Find(id);
             }
 
-            return model;
+            return product;
         }
 
         // POST api/<ProductsController>
@@ -48,7 +48,7 @@ namespace Storage.Controllers {
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] ProductModel newProduct) {
             using (var db = new ApiDbContext()) {
-                if (newProduct != null && id > 0) {
+                if (newProduct != null) {
                     var product = db.Products.Find(id);
 
                     if (product != null) {
@@ -67,8 +67,9 @@ namespace Storage.Controllers {
         [HttpDelete("{id}")]
         public void Delete(int id) {
             using (var db = new ApiDbContext()) {
-                var product = db.Products.Find(id);
+                ProductModel? product = db.Products.Find(id);
                 if (product != null) {
+                    db.Orders.RemoveRange(db.Orders.Where<OrderModel>(o => o.ProductId == product.Id));
                     db.Products.Remove(product);
                     db.SaveChanges();
                 }

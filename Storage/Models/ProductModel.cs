@@ -9,6 +9,6 @@ namespace Storage.Models {
         [Required]
         public float Price { get; set; }
         public string? Description { get; set; }
-        public bool Active { get; set; }
+        public bool Active { get; set; } = true;
     }
 }
