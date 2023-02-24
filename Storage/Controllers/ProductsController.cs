@@ -9,7 +9,10 @@ namespace Storage.Controllers {
     [ApiController]
     public class ProductsController : ControllerBase {
 
-        // GET: api/<ProductsController>
+        /// <summary>
+        /// Pulls all available products from Database
+        /// </summary>
+        /// <returns>All available products</returns>
         [HttpGet]
         public IEnumerable<ProductModel> Get() {
             List<ProductModel> products;
@@ -21,7 +24,11 @@ namespace Storage.Controllers {
             return products;
         }
 
-        // GET api/<ProductsController>/5
+        /// <summary>
+        /// Pulls product with given id from Database
+        /// </summary>
+        /// <param name="id">Id of product you need to get</param>
+        /// <returns>Product with given id or null if such product does not exist in Database</returns>
         [HttpGet("{id}")]
         public ProductModel? Get(int id) {
             ProductModel? product;
@@ -33,7 +40,10 @@ namespace Storage.Controllers {
             return product;
         }
 
-        // POST api/<ProductsController>
+        /// <summary>
+        /// Adds given product to Database
+        /// </summary>
+        /// <param name="product">Product, that has to be added to Database</param>
         [HttpPost]
         public void Post([FromBody] ProductModel product) {
             if (product != null) {
@@ -44,7 +54,11 @@ namespace Storage.Controllers {
             }
         }
 
-        // PUT api/<ProductsController>/5
+        /// <summary>
+        /// Updates info about existing product
+        /// </summary>
+        /// <param name="id">Id of a product to update</param>
+        /// <param name="newProduct">New info about the product</param>
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] ProductModel newProduct) {
             using (var db = new ApiDbContext()) {
@@ -63,7 +77,10 @@ namespace Storage.Controllers {
             }
         }
 
-        // DELETE api/<ProductsController>/5
+        /// <summary>
+        /// Deletes product with given id, as well as all orders related to it
+        /// </summary>
+        /// <param name="id">Id of a product to delete</param>
         [HttpDelete("{id}")]
         public void Delete(int id) {
             using (var db = new ApiDbContext()) {

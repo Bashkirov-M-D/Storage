@@ -8,7 +8,11 @@ namespace Storage.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase {
-        // GET: api/<OrdersController>
+        
+        /// <summary>
+        /// Pulls all orders from Database
+        /// </summary>
+        /// <returns>All orders</returns>
         [HttpGet]
         public IEnumerable<OrderModel> Get() {
             List<OrderModel> orders;
@@ -20,7 +24,11 @@ namespace Storage.Controllers {
             return orders;
         }
 
-        // GET api/<OrdersController>/5
+        /// <summary>
+        /// Pulls order, that has given id from Database
+        /// </summary>
+        /// <param name="id">Id of an order you need to get</param>
+        /// <returns>Order with given id or null if such order does not exist in Database</returns>
         [HttpGet("{id}")]
         public OrderModel? Get(int id) {
             OrderModel? order;
@@ -32,7 +40,10 @@ namespace Storage.Controllers {
             return order;
         }
 
-        // POST api/<OrdersController>
+        /// <summary>
+        /// Adds given order to Database, if it requires an available product 
+        /// </summary>
+        /// <param name="order">Order, that has to be added to Database</param>
         [HttpPost]
         public void Post([FromBody] OrderModel order) {
             if (order != null) {
@@ -50,7 +61,11 @@ namespace Storage.Controllers {
             }
         }
 
-        // PUT api/<OrdersController>/5
+        /// <summary>
+        /// Updates info about existing order, if new required product is available. 
+        /// </summary>
+        /// <param name="id">Id of an order to update</param>
+        /// <param name="newProduct">New info about the order</param>
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] OrderModel newOrder) {
             if (newOrder != null) {
@@ -76,7 +91,10 @@ namespace Storage.Controllers {
             }
         }
 
-        // DELETE api/<OrdersController>/5
+        /// <summary>
+        /// Deletes order with given id, makes required product available again, if needed.
+        /// </summary>
+        /// <param name="id">Id of an order to delete</param>
         [HttpDelete("{id}")]
         public void Delete(int id) {
             using (var db = new ApiDbContext()) {
