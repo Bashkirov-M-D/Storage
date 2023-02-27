@@ -65,7 +65,7 @@ namespace Storage.Controllers {
         /// Updates info about existing order, if new required product is available. 
         /// </summary>
         /// <param name="id">Id of an order to update</param>
-        /// <param name="newProduct">New info about the order</param>
+        /// <param name="newOrder">New info about the order</param>
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] OrderModel newOrder) {
             if (newOrder != null) {

@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Storage</name>
+    </assembly>
+    <members>
+        <member name="M:Storage.Controllers.OrdersController.Get">
+            <summary>
+            Pulls all orders from Database
+            </summary>
+            <returns>All orders</returns>
+        </member>
+        <member name="M:Storage.Controllers.OrdersController.Get(System.Int32)">
+            <summary>
+            Pulls order, that has given id from Database
+            </summary>
+            <param name="id">Id of an order you need to get</param>
+            <returns>Order with given id or null if such order does not exist in Database</returns>
+        </member>
+        <member name="M:Storage.Controllers.OrdersController.Post(Storage.Models.OrderModel)">
+            <summary>
+            Adds given order to Database, if it requires an available product 
+            </summary>
+            <param name="order">Order, that has to be added to Database</param>
+        </member>
+        <member name="M:Storage.Controllers.OrdersController.Put(System.Int32,Storage.Models.OrderModel)">
+            <summary>
+            Updates info about existing order, if new required product is available. 
+            </summary>
+            <param name="id">Id of an order to update</param>
+            <param name="newOrder">New info about the order</param>
+        </member>
+        <member name="M:Storage.Controllers.OrdersController.Delete(System.Int32)">
+            <summary>
+            Deletes order with given id, makes required product available again, if needed.
+            </summary>
+            <param name="id">Id of an order to delete</param>
+        </member>
+        <member name="M:Storage.Controllers.ProductsController.Get">
+            <summary>
+            Pulls all available products from Database
+            </summary>
+            <returns>All available products</returns>
+        </member>
+        <member name="M:Storage.Controllers.ProductsController.Get(System.Int32)">
+            <summary>
+            Pulls product with given id from Database
+            </summary>
+            <param name="id">Id of product you need to get</param>
+            <returns>Product with given id or null if such product does not exist in Database</returns>
+        </member>
+        <member name="M:Storage.Controllers.ProductsController.Post(Storage.Models.ProductModel)">
+            <summary>
+            Adds given product to Database
+            </summary>
+            <param name="product">Product, that has to be added to Database</param>
+        </member>
+        <member name="M:Storage.Controllers.ProductsController.Put(System.Int32,Storage.Models.ProductModel)">
+            <summary>
+            Updates info about existing product
+            </summary>
+            <param name="id">Id of a product to update</param>
+            <param name="newProduct">New info about the product</param>
+        </member>
+        <member name="M:Storage.Controllers.ProductsController.Delete(System.Int32)">
+            <summary>
+            Deletes product with given id, as well as all orders related to it
+            </summary>
+            <param name="id">Id of a product to delete</param>
+        </member>
+    </members>
+</doc>
