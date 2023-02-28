@@ -12,7 +12,7 @@ namespace Storage.Data {
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
-            => optionsBuilder.UseSqlite(@"Data Source=Storage.db");
+            => optionsBuilder.UseSqlite(@$"Data Source={System.AppContext.BaseDirectory}Storage.db");
         
     }
 }

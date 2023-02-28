@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c => c.IncludeXmlComments("ProjectDoc.xml"));
+builder.Services.AddSwaggerGen(c => c.IncludeXmlComments($"{System.AppContext.BaseDirectory}ProjectDoc.xml"));
 
 var app = builder.Build();
 

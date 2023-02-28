@@ -68,27 +68,15 @@ namespace Storage.Controllers {
         /// <param name="newOrder">New info about the order</param>
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] OrderModel newOrder) {
-            if (newOrder != null) {
-                using (var db = new ApiDbContext()) {
-                    OrderModel? order = db.Orders.Find(id);
+            using (var db = new ApiDbContext()) {
+                OrderModel? order = db.Orders.Find(id);
 
-                    if (order != null) {
-                        ProductModel? orderedProduct = db.Products.Find(newOrder.ProductId);
-                        if (orderedProduct != null && orderedProduct.Active) {
-                            if (order.RemoveProduct && !newOrder.RemoveProduct)
-                                orderedProduct.Active = true;
-
-                            order.ProductId = newOrder.ProductId;
-                            order.RemoveProduct = newOrder.RemoveProduct;
-
-                            if (order.RemoveProduct)
-                                orderedProduct.Active = false;
-
-                            db.SaveChanges();
-                        }
-                    }
+                if (order != null) {
+                    Delete(id);
+                    Post(newOrder);
                 }
             }
+
         }
 
         /// <summary>
